@@ -1,0 +1,286 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+h2 {
+  font-size: 35px!important;
+}
+
+.todo {
+  background: #f3f3f3;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  height: auto!important;
+
+}
+.groupName a {
+  width: 100%;
+  height: 100%;
+}
+/*.container {*/
+/*  position: absolute;*/
+/*  display: flex;*/
+/*  top: 50px;*/
+/*  width: 100%;*/
+/*  max-width: 1920px;*/
+/*  margin: 0 2%;*/
+/*}*/
+
+.todo.completed span {
+  line-height: 1px;
+  text-decoration: line-through;
+  text-decoration-color: rgb(0, 150, 136);
+  text-decoration-thickness: 2px ;
+  font-size: 18px;
+  color: #000;
+}
+.todo label :hover {
+  transition: .3s;
+  color: #000;
+}
+
+.completed:not {
+  color: #fff;
+}
+nav {
+  padding: 0 20px;
+  background-color: #009688!important;
+}
+.todo label {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 1rem;
+  height: auto;
+}
+
+.todo span, .completed span {
+  font-size: 18px;
+  width: 60%;
+  height: auto!important;
+  overflow-x: hidden;
+}
+
+.todo i {
+  z-index: 2;
+}
+
+.completed {
+  transition: all .3s;
+  background-color: #d3d3d3;
+  color: #f3f3f3;
+}
+
+.todo span {
+  font-size: 18px!important;
+}
+
+.input-field select {
+  display: block!important;
+  position: static!important;
+  opacity: 1!important;
+  width: 100%!important;
+  pointer-events: auto!important;
+  height: auto!important;
+
+}
+
+
+.person-and-trash {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.person-and-trash strong {
+  padding-right: 35px;
+}
+
+[type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
+  border-radius: 5px;
+}
+.completed [type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
+  border-radius: 0px;
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #09ce07;
+  border-bottom: 2px solid #00ff33;
+}
+
+.do, .done {
+  min-height: 200px;
+
+}
+
+.input-field>label {
+  top: -25px!important;
+}
+
+.header-ul {
+  display: flex;
+  justify-content: space-between;
+  background-color: #009688;
+}
+.header-ul li {
+  position: relative;
+
+}
+.createfrom {
+  display: flex;
+  flex-direction: column;
+  max-width: 324px;
+
+}
+body nav ul a {
+  padding: 0 20px;
+}
+
+button {
+
+  border: none;
+  border-radius: 5px;
+  width: 50%;
+  height: 35px;
+}
+
+
+.input-field select {
+  border: 2px solid #009688;
+  border-radius: 5px;
+}
+
+.material-icons.red-text {
+  color: #009688 !important;
+}
+
+.groupName {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  /*padding: 1rem;*/
+  height: auto;
+  background-color: #f3f3f3;
+  margin: 10px 0;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.groupName .title {
+  font-size: 15px;
+  display: flex;
+
+}
+nav {
+  padding: 0 30px;
+  display: flex;
+  justify-content: center;
+
+}
+nav .header-ul {
+  max-width: 1083px;
+  width: 100%;
+
+}
+.header-ul li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-sub-ul {
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 55px;
+  background-color: #009688;
+  right: 0px;
+  transform-origin: top;
+  transform: rotateX(90deg);
+  transition: .5s;
+  z-index: 10;
+}
+.header-sub-ul li{
+  width: 100%;
+  padding: 0px;
+  margin: 5px 0;
+  line-height: 38px;
+}
+.header-sub-ul li a {
+  padding: 0;
+}
+.header-ul>li:last-child {
+  width: 90px;
+}
+.header-ul li:hover .header-sub-ul {
+  transform: rotateX(0deg);
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fp-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #a1a1a1;
+  opacity: 0.5;
+}
+
+.fp-container .fp-loader {
+  top: 30%;
+  left: 48%;
+  z-index: 1000;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 5px #009688 dashed;
+  animation-name: loader;
+  animation-duration: 3s;
+  transition: .3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-out;
+
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+}
+
+/*.foranimation-div {*/
+/*  position: absolute;*/
+/*  width: 100%;*/
+/*}*/
+/*.container.main {*/
+/*   position: relative;*/
+/* }*/
