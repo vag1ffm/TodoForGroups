@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navbar, Container, Row, Col, Button, Nav, Modal } from 'react-bootstrap';
-import ModalWindow from "../modalWindow";
-import registration from "../registration";
+import ModalWindow from "../../modalWindow";
+import registration from "../../registration";
 
 const LandingPage = () => {
     const [showModal, setShowModal] = useState(false);

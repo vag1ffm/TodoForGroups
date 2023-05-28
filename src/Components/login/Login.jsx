@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import {useForm} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Modal, Button } from 'react-bootstrap';
+import HttpClient from "../../server/httpClient";
 const Login = () => {
 
     const schema = yup.object().shape({

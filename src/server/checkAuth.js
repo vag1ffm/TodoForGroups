@@ -1,5 +1,4 @@
-
 export const checkAuth = () => {
-    return (localStorage.getItem('authToken'))
-        ? ()=> console.log('i"m in'): false
-}
+    const authToken= localStorage.getItem('authToken');
+    return !!authToken; // Возвращает true, если токен существует, иначе false
+};

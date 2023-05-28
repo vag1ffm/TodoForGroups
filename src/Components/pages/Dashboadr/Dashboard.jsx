@@ -1,9 +1,9 @@
 import React, {useRef} from 'react';
-import Header from "../header";
-import './index.css';
+import Header from "../../header";
+import './../../../index.css';
 import {CSSTransition, SwitchTransition} from "react-transition-group";
 import {Route, Routes, useLocation} from "react-router-dom";
-import {routes} from "../../urls/urls";
+import {routes} from "../../../urls/urls";
 import Landing from "../landing/Landing";
 
 
@@ -29,7 +29,7 @@ const Dashboard = () => {
                         {(state) => (
                             <div ref={nodeRef} className="page">
                                 <Routes location={location}>
-                                    <Route path={routes.home} element={<Landing/>}/>
+
                                 </Routes>
                             </div>
                         )}
