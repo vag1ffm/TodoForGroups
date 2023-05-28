@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import * as yup from 'yup';
 import {useForm} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Modal, Button } from 'react-bootstrap';
-import HttpClient from "../../server/httpClient";
+import { Modal } from 'react-bootstrap';
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {LoginAxios} from "../../store/reducer/user/axios";
 const Login = () => {
 
     const schema = yup.object().shape({
@@ -15,8 +17,17 @@ const Login = () => {
         resolver: yupResolver(schema),
     });
 
+    const {status} = useSelector(state => state.userSlice)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    useEffect(()=> {
+        status === 1 && navigate('/')
+    },[status])
+
+    console.log(status)
     const onSubmit = (data) => {
         console.log(data);
+        dispatch(LoginAxios(data))
 
         // Здесь можно выполнить логику отправки данных на сервер или другие действия
     };

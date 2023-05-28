@@ -1,25 +1,27 @@
 import axios from "axios";
 
 
-export const axiosIntrance = axios.create({
+export const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_URL
 })
 
 
 class HttpClient {
     post(parameters) {
-        const {url, payload} = parameters
+        const {url, payload} = parameters;
 
         const options = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             }
         };
 
-        return axiosIntrance(url, payload, options)
-            .then(res => console.log(res))
+        return axiosInstance
+            .post(url, payload, options)
+             .then(res => res)
     };
 };
 
+const httpClient = new HttpClient();
 
-export default HttpClient
+export default httpClient
