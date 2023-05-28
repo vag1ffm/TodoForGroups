@@ -1,57 +1,38 @@
-import React, {useEffect, useRef} from 'react';
-import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
-import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import Header from './Components/Header';
-import TodoList from './Components/Pages/Todolist';
-import Join from './Components/Pages/Join';
-import Login from './Components/Pages/Registrate/login';
-import Home from './Components/Pages/home/Home';
-import Create from './Components/Pages/Create';
-import Registration from './Components/Pages/Registrate/Registrate';
+import React, {useRef} from 'react';
+import {
+    Route,
+    Routes,
+    useLocation,
+    Navigate
+} from 'react-router-dom';
+import {CSSTransition, SwitchTransition} from 'react-transition-group';
+import Home from './components/home';
+import GroupList from './components/groupList';
+import FindGroup from './components/findGroup';
+import CreateGroup from './components/createGroup';
+import Login from './components/login';
+import Registration from './components/registration';
+import NotFound from './components/notFound';
+import PrivateRoute from './components/privateRoute';
 import './App.css';
-import {useDispatch} from "react-redux";
-import {GetUserDataAxios} from "./store/reducer/User/axios";
+import Header from "./components/header";
+import {routes} from "./urls/urls";
+import {checkAuth} from "./server/checkAuth";
+import Landing from "./components/landing/Landing";
+
 
 const App = () => {
     const location = useLocation();
     const nodeRef = useRef(null);
-    const dispatch = useDispatch();
-    const history = useNavigate();
+    const isAuthenticated = checkAuth();
 
-    useEffect(()=> {
-        if (localStorage.getItem('app_token')) {
-            dispatch(GetUserDataAxios());
-        } else {
-
-        }
-    }, []);
 
     return (
         <>
-            <Header />
-            <div className="container">
-                <SwitchTransition mode="out-in">
-                    <CSSTransition
-                        key={location.key}
-                        nodeRef={nodeRef}
-                        timeout={300}
-                        classNames="page"
-                        unmountOnExit
-                    >
-                        {(state) => (
-                            <div ref={nodeRef} className="page">
-                                <Routes location={location}>
-                                    <Route path="/" element={<Home />} />
-                                    <Route path="/create" element={<Create />} />
-                                    <Route path="/join" element={<Join />} />
-                                    <Route path="/register" element={<Registration />} />
-                                    <Route path="/login" element={<Login />} />
-                                    <Route path="/group/:group_id" element={<TodoList />} />
-                                </Routes>
-                            </div>
-                        )}
-                    </CSSTransition>
-                </SwitchTransition>
+            <div ref={nodeRef} className="page">
+                <Routes location={location}>
+                    <Route path={routes.home} element={<Landing/>}/>
+                </Routes>
             </div>
         </>
     );
