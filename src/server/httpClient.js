@@ -23,7 +23,7 @@ class HttpClient {
 
     generelPost(parameters) {
         const {url, payload} = parameters;
-
+        console.log(parameters)
         const options = {
             headers: {
                 'Content-Type': 'application/json',
@@ -45,10 +45,23 @@ class HttpClient {
                 Authorization: `Token ${localStorage.getItem('authToken')}`
             }
         };
-        console.log(url, payload, options)
 
         return axiosInstance
             .get(url, options)
+    };
+    generelPut(parameters) {
+        const {url, payload} = parameters;
+
+        const options = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${localStorage.getItem('authToken')}`
+            }
+        };
+
+
+        return axiosInstance
+            .put(url, payload, options)
     };
 };
 

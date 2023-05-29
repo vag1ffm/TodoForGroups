@@ -2,10 +2,10 @@ import { createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
     groups: [],
+    todos: [],
     isLoading: false,
     error: '',
     status: 0,
-
 }
 
 export const todoSlice = createSlice({
@@ -14,7 +14,11 @@ export const todoSlice = createSlice({
     reducers: {
         getTodoGroups(state, {payload}){
             state.isLoading = false
-            state.groups = payload
+            state.groups = [...payload.mine, ...payload.others]
+        },
+        getTodos(state, {payload}) {
+            state.isLoading = false
+            state.todos = payload
         },
 
         loading(state) {
@@ -41,7 +45,8 @@ export const todoSlice = createSlice({
 
 
 export const {
-
+    getTodoGroups,
+    getTodos,
     loading,
     error
 } = todoSlice.actions

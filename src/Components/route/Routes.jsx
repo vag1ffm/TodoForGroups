@@ -8,6 +8,7 @@ import Home from "../home";
 import NotFound from "../pages/notFound";
 import FindGroup from "../findGroup";
 import CreateGroup from "../createGroup";
+import Group from "../Group";
 
 const RoutesComp = () => {
     return (
@@ -21,6 +22,8 @@ const RoutesComp = () => {
                 <Route path={routes.home} element={<Home />} />
                 <Route path={routes.findGroup} element={<FindGroup />} />
                 <Route path={routes.createGroup} element={<CreateGroup />} />
+                <Route path={routes.group} element={<Group />} />
+
             </Route>
 
 

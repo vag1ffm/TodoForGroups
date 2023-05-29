@@ -7,6 +7,8 @@ const initialState = {
     error: '',
     status: 0,
 
+
+
 }
 
 export const userSlice = createSlice({

@@ -13,11 +13,12 @@ const PrivateRoute = () => {
     const isAuthorizated = checkAuth()
 
     useEffect(() => {
-        dispatch(GetUserDataAxios())
 
         if (!isAuthorizated) {
-            history('/welcome')
+            return history('/welcome')
         }
+
+        dispatch(GetUserDataAxios())
     }, [isAuthorizated])
 
 
