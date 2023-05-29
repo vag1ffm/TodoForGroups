@@ -1,24 +1,31 @@
 import React, {useEffect} from 'react';
+import {Outlet, useNavigate} from "react-router-dom";
 import {checkAuth} from "../../server/checkAuth";
-import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
+import {GetUserDataAxios} from "../../store/reducer/user/axios";
+import Header from "../header";
 
 const PrivateRoute = () => {
-    let { authToken } = useSelector(state => state.userSlice)
-    console.log(authToken)
-    let isAuth = checkAuth()
-    const history = useNavigate()
 
-    useEffect(()=> {
-        if (!isAuth) {
+    const history = useNavigate()
+    const dispatch = useDispatch()
+
+    const isAuthorizated = checkAuth()
+
+    useEffect(() => {
+        dispatch(GetUserDataAxios())
+
+        if (!isAuthorizated) {
             history('/welcome')
         }
-    }, [isAuth])
+    }, [isAuthorizated])
+
 
 
     return (
         <>
-
+            <Header/>
+            <Outlet/>
         </>
     );
 };

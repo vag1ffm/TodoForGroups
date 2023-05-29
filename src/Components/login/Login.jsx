@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
 import * as yup from 'yup';
 import {useForm} from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Modal } from 'react-bootstrap';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {Modal} from 'react-bootstrap';
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {LoginAxios} from "../../store/reducer/user/axios";
+
 const Login = () => {
 
     const schema = yup.object().shape({
@@ -13,24 +14,28 @@ const Login = () => {
         password: yup.string().required('Password is required'),
     });
 
-    const { handleSubmit, register, formState: { errors } } = useForm({
+    const {handleSubmit, register, formState: {errors}} = useForm({
         resolver: yupResolver(schema),
     });
 
-    const {status} = useSelector(state => state.userSlice)
+    const {isLoading, status} = useSelector(state => state.userSlice)
+
+    console.log(isLoading)
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    useEffect(()=> {
+
+    useEffect(() => {
         status === 1 && navigate('/')
-    },[status])
+    }, [status])
 
     console.log(status)
     const onSubmit = (data) => {
         console.log(data);
         dispatch(LoginAxios(data))
-
         // Здесь можно выполнить логику отправки данных на сервер или другие действия
     };
+
 
     return (
         <>
@@ -49,7 +54,13 @@ const Login = () => {
                         <input type="password" className="form-control" {...register('password')} />
                         {errors.password && <p>{errors.password.message}</p>}
                     </div>
-                    <button type="submit" className="btn btn-primary mt-2">Log In</button>
+                    <button type="submit" className="btn btn-primary mt-2" disabled={isLoading}>
+                        {isLoading ? (
+                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        ) : (
+                            'Log In'
+                        )}
+                    </button>
                 </form>
             </Modal.Body>
 

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import * as yup from "yup";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Button, Modal} from "react-bootstrap";
+import {useDispatch, useSelector} from "react-redux";
+import {RegisterationAxios} from "../../store/reducer/user/axios";
+import {useNavigate} from "react-router-dom";
 
 const Registration = () => {
 
@@ -16,9 +19,18 @@ const Registration = () => {
         resolver: yupResolver(schema),
     });
 
+    const dispatch = useDispatch()
     const onSubmit = (data) => {
         console.log(data);
+        dispatch(RegisterationAxios(data))
     };
+
+    const {status} = useSelector(state => state.userSlice)
+    const navigate = useNavigate()
+    
+    useEffect(()=>{
+        status === 1 && navigate('/')
+    }, [status])
 
     return (
         <>

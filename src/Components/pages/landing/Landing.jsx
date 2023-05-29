@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Navbar, Container, Row, Col, Button, Nav, Modal } from 'react-bootstrap';
 import ModalWindow from "../../modalWindow";
 import registration from "../../registration";
+import {useSelector} from "react-redux";
 
 const LandingPage = () => {
     const [showModal, setShowModal] = useState(false);
@@ -15,6 +16,10 @@ const LandingPage = () => {
     const closeModal = () => {
         setShowModal(false);
     };
+
+    let {status} = useSelector(state => state.userSlice)
+
+    console.log('status', status)
 
 
     return (

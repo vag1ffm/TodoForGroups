@@ -16,11 +16,13 @@ const RoutesComp = () => {
                 <Route path="" element={<Landing />} />
             </Route>
 
+
             <Route path={routes.home} element={<PrivateRoute />}>
                 <Route path={routes.home} element={<Home />} />
                 <Route path={routes.findGroup} element={<FindGroup />} />
                 <Route path={routes.createGroup} element={<CreateGroup />} />
             </Route>
+
 
             <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,63 +1,43 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {routes} from "../../urls/urls";
 
 const Header = () => {
+    const dispatch = useDispatch();
+    const {user} = useSelector(state => state.userSlice);
 
-    function handleLogout() {
-    }
-    function renderLogoutMenu() {
-        return (
-            <li>
-                    user.username
-                <ul className="header-sub-ul">
-                    <li>
-                        <Link to="/login/" onClick={handleLogout}>
-                            Log Out
-                        </Link>
-                    </li>
-                    <Link to="/settings/">
-                        <li>Settings</li>
-                    </Link>
-                </ul>
-            </li>
-        );
-    }
-
-    function renderLoginMenu() {
-        return (
-            <li>
-                <Link className="click" to="/register/">
-                    Account
-                </Link>
-                <ul className="header-sub-ul">
-                    <li>
-                        <Link to="/login/">Log in</Link>
-                    </li>
-                    <li>
-                        <Link to="/register/">Register</Link>
-                    </li>
-                </ul>
-            </li>
-        );
-    }
+    const handleLogout = () => {
+        // dispatch(logout());
+    };
 
     return (
-        <nav>
-            <ul className="header-ul">
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/create/">Create</Link>
-                </li>
-                <li>
-                    <Link to="/join/">Join</Link>
-                </li>
-                {localStorage.getItem('app_token') === null
-                    ? renderLoginMenu()
-                    : renderLogoutMenu()}
-            </ul>
-        </nav>
+        <Navbar bg="dark" variant="dark" expand="lg">
+            <Navbar.Brand as={Link} to={routes.home} className={'me-5'}>
+                <i className="fas fa-list-ul me-3 ms-2"></i>
+                Todo For Groups
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="navbar" />
+            <Navbar.Collapse id="navbar">
+                <Nav className="ml-auto">
+                    <Nav.Link as={Link} to={routes.home} className={'me-1'}>
+                        <i className="fas fa-home me-2 ms-2"></i>
+                        Home
+                    </Nav.Link>
+                    <Nav.Link as={Link} to={routes.createGroup} className={'me-1'}>
+                        <i className="fas fa-plus-square me-2 ms-2"></i>
+                        Create
+                    </Nav.Link>
+                    <Nav.Link as={Link} to={routes.findGroup} className={'me-1'}>
+                        <i className="fas fa-search me-2 ms-2"></i>
+                        Find
+                    </Nav.Link>
+                        <NavDropdown  title={<><i className="fas fa-user-circle me-2 ms-2"></i>{user.username}</>} id="nav-dropdown">
+                            <NavDropdown.Item onClick={handleLogout} >Logout</NavDropdown.Item>
+                        </NavDropdown>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
     );
 };
 

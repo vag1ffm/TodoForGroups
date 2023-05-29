@@ -2,10 +2,9 @@ import { createSlice} from "@reduxjs/toolkit";
 import {LoginAxios, loginSlice} from "./axios";
 
 const initialState = {
-    user: [],
+    user: {},
     isLoading: false,
     error: '',
-    authToken: '',
     status: 0,
 
 }
@@ -14,11 +13,14 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        getAuthToken(state, {payload}){
-            state.authToken = payload
-            console.log(payload)
+        getUserData(state, {payload}){
+            state.isLoading = false
+
+            state.user = payload
         },
+
         loading(state) {
+            console.log('в слайс тру')
             state.isLoading = true
         },
         error(state) {
@@ -32,7 +34,7 @@ export const userSlice = createSlice({
             state.status = 0;
         });
         reducerChanger.addCase(LoginAxios.fulfilled, (state) => {
-            state.status = 1;
+                state.status = 1;
         });
         reducerChanger.addCase(LoginAxios.rejected, (state) => {
             state.status = 0;
@@ -42,6 +44,8 @@ export const userSlice = createSlice({
 
 
 export const {
-    getAuthToken
+    getUserData,
+    loading,
+    error
 } = userSlice.actions
 export default userSlice.reducer;
