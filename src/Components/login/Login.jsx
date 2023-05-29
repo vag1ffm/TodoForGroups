@@ -24,7 +24,6 @@ const Login = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
     useEffect(() => {
         status === 1 && navigate('/')
     }, [status])

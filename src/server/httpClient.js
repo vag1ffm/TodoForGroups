@@ -27,6 +27,7 @@ class HttpClient {
         const options = {
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Token ${localStorage.getItem('authToken')}`
             }
         };
 

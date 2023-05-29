@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {LoginAxios, loginSlice} from "./axios";
+import {LoginAxios} from "./axios";
 
 const initialState = {
     user: {},
@@ -18,9 +18,7 @@ export const userSlice = createSlice({
 
             state.user = payload
         },
-
         loading(state) {
-            console.log('в слайс тру')
             state.isLoading = true
         },
         error(state) {
