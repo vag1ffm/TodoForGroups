@@ -49,7 +49,7 @@ export const GetUserDataAxios = createAsyncThunk(
                 url: '/api/auth/users/me/',
                 payload,
             }
-            httpClient.generelGet(parameters).then(res => {
+            httpClient.generalGet(parameters).then(res => {
                 dispatch(getUserData(res.data))
             })
         } catch (e) {
@@ -66,7 +66,7 @@ export const JoinToGroupAxios = createAsyncThunk(
                 url: '/api/group_member/',
                 payload,
             }
-            httpClient.generelPost(parameters).then(res => {
+            httpClient.generalPost(parameters).then(res => {
                 console.log(res)
             })
         } catch (e) {

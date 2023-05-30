@@ -2,7 +2,7 @@ export const routes = {
     home: '/',
     welcome: '/welcome',
     groupList: '/group-list',
-    group: '/group/:id',
+    group: '/group/:group_id/:group_name',
     findGroup: '/find',
     createGroup: '/create',
     login: '/login',

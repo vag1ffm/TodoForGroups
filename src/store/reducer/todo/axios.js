@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import httpClient from "../../../server/httpClient";
-import {getTodoGroups, getTodos, loading} from "./todoSlice";
+import {error, getTodoGroups, getTodos, loading} from "./todoSlice";
 
 
 export const CreateTodoGroupAxios = createAsyncThunk(
@@ -14,7 +14,7 @@ export const CreateTodoGroupAxios = createAsyncThunk(
                 payload,
             }
 
-            httpClient.generelPost(parameters).then(res => {
+            httpClient.generalPost(parameters).then(res => {
                 console.log(res)
             })
         } catch (e) {
@@ -32,7 +32,7 @@ export const GetTodoGroupsAxios = createAsyncThunk(
                 url: '/api/group/',
                 payload,
             }
-            httpClient.generelGet(parameters).then(res => {
+            httpClient.generalGet(parameters).then(res => {
                 dispatch(getTodoGroups({
                     others: res.data.groups[0],
                     mine: res.data.groups[1],
@@ -52,9 +52,13 @@ export const GetTodosAxios = createAsyncThunk(
             let parameters = {
                 url: `/api/todo/${payload}`,
             }
-            httpClient.generelGet(parameters).then(res => {
-                console.log(res.data.todos)
-                dispatch(getTodos(res.data.todos))
+            httpClient.generalGet(parameters).then(res => {
+                if (res.data.todos !== undefined) {
+                    console.log(res.data.todos)
+                    dispatch(getTodos(res.data.todos))
+                } else {
+                    dispatch(error())
+                }
             })
         } catch (e) {
             console.log(rejectWithValue)
@@ -64,18 +68,18 @@ export const GetTodosAxios = createAsyncThunk(
 
 export const AddTodosAxios = createAsyncThunk(
     "user/loginSlice",
-    ({id, payload}, {dispatch, rejectWithValue}) => {
+    ({group_id, payload}, {dispatch, rejectWithValue}) => {
         try {
             dispatch(loading())
             let parameters = {
-                url: `/api/todo/${id}/`,
+                url: `/api/todo/${group_id}/`,
                 payload
             }
             console.log(payload)
 
-            httpClient.generelPost(parameters).then(res => {
+            httpClient.generalPost(parameters).then(res => {
                 console.log(res)
-                dispatch(GetTodosAxios(id))
+                dispatch(GetTodosAxios(group_id))
                 // dispatch(getTodos(res.data.todos))
             })
         } catch (e) {
@@ -86,18 +90,18 @@ export const AddTodosAxios = createAsyncThunk(
 
 export const ChangeTodosAxios = createAsyncThunk(
     "user/loginSlice",
-    ({payload, id}, {dispatch, rejectWithValue}) => {
+    ({payload, group_id}, {dispatch, rejectWithValue}) => {
         try {
 
             let parameters = {
                 url: `/api/todo/${payload.id}/`,
                 payload
             }
-            console.log(payload)
+            console.log(parameters)
 
-            httpClient.generelPut(parameters).then(res => {
+            httpClient.generalPut(parameters).then(res => {
                 console.log(res)
-                dispatch(GetTodosAxios(id))
+                dispatch(GetTodosAxios(group_id))
                 // dispatch(getTodos(res.data.todos))
             })
         } catch (e) {
@@ -105,3 +109,25 @@ export const ChangeTodosAxios = createAsyncThunk(
         }
     }
 );
+
+export const DeleteTodosAxios = createAsyncThunk(
+    "user/loginSlice",
+    ({payload, group_id}, {dispatch, rejectWithValue}) => {
+        try {
+
+            let parameters = {
+                url: `/api/todo/${payload}/`,
+            }
+            console.log(payload)
+
+            httpClient.generalDelete(parameters).then(res => {
+                console.log(res)
+                dispatch(GetTodosAxios(group_id))
+                // dispatch(getTodos(res.data.todos))
+            })
+        } catch (e) {
+            console.log(rejectWithValue)
+        }
+    }
+);
+

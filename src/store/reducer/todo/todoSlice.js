@@ -14,19 +14,23 @@ export const todoSlice = createSlice({
     reducers: {
         getTodoGroups(state, {payload}){
             state.isLoading = false
+            state.error = false
             state.groups = [...payload.mine, ...payload.others]
         },
         getTodos(state, {payload}) {
             state.isLoading = false
+            state.error = false
             state.todos = payload
         },
 
         loading(state) {
             state.isLoading = true
+            state.error = false
+
         },
         error(state) {
             state.isLoading = false
-            state.error = 'Ошибка'
+            state.error = true
         },
     },
 

@@ -21,7 +21,7 @@ class HttpClient {
             .then(res => res)
     };
 
-    generelPost(parameters) {
+    generalPost(parameters) {
         const {url, payload} = parameters;
         console.log(parameters)
         const options = {
@@ -36,7 +36,7 @@ class HttpClient {
             .then(res => res)
     };
 
-    generelGet(parameters) {
+    generalGet(parameters) {
         const {url, payload = null} = parameters;
 
         const options = {
@@ -49,7 +49,7 @@ class HttpClient {
         return axiosInstance
             .get(url, options)
     };
-    generelPut(parameters) {
+    generalPut(parameters) {
         const {url, payload} = parameters;
 
         const options = {
@@ -62,6 +62,20 @@ class HttpClient {
 
         return axiosInstance
             .put(url, payload, options)
+    };
+    generalDelete(parameters) {
+        const {url, payload = null} = parameters;
+
+        const options = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${localStorage.getItem('authToken')}`
+            }
+        };
+
+
+        return axiosInstance
+            .delete(url, options)
     };
 };
 

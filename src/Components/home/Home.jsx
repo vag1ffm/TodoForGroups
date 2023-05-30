@@ -20,7 +20,7 @@ const Home = () => {
             <h1 className={'my-4'}>Home page</h1>
             <ol className="list-group list-group-numbered">
                 {groups?.map((group, index) => {
-                    return <Link className={styles.a} key={index} to={`/group/${group.id}`}>
+                    return <Link className={styles.a} key={index} to={`/group/${group.id}/${group.group_title}`}>
                         <li className="list-group-item d-flex justify-content-between align-items-start">
                             <div className="ms-2 me-auto">
                                 <div className="fw-bold">{group.group_title}</div>
