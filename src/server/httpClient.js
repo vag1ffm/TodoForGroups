@@ -77,6 +77,20 @@ class HttpClient {
         return axiosInstance
             .delete(url, options)
     };
+    LogoutPost(parameters) {
+        const {url} = parameters;
+
+        const options = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${localStorage.getItem('authToken')}`
+            }
+        };
+
+        return axiosInstance
+            .post(url, {},   options)
+            .then(res => res)
+    };
 };
 
 const httpClient = new HttpClient();

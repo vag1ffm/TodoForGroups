@@ -20,15 +20,16 @@ const Login = () => {
 
     const {isLoading, status} = useSelector(state => state.userSlice)
 
-    console.log(isLoading)
+
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
     useEffect(() => {
         status === 1 && navigate('/')
     }, [status])
 
-    console.log(status)
+    console.log('status', status)
     const onSubmit = (data) => {
         console.log(data);
         dispatch(LoginAxios(data))

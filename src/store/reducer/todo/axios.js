@@ -7,7 +7,6 @@ export const CreateTodoGroupAxios = createAsyncThunk(
     "user/loginSlice",
     (payload, {dispatch, rejectWithValue}) => {
         try {
-            dispatch(loading())
 
             let parameters = {
                 url: '/api/group/',
@@ -27,7 +26,6 @@ export const GetTodoGroupsAxios = createAsyncThunk(
     "user/loginSlice",
     (payload, {dispatch, rejectWithValue}) => {
         try {
-            dispatch(loading())
             let parameters = {
                 url: '/api/group/',
                 payload,
@@ -48,7 +46,6 @@ export const GetTodosAxios = createAsyncThunk(
     "user/loginSlice",
     (payload, {dispatch, rejectWithValue}) => {
         try {
-            dispatch(loading())
             let parameters = {
                 url: `/api/todo/${payload}`,
             }
@@ -70,7 +67,6 @@ export const AddTodosAxios = createAsyncThunk(
     "user/loginSlice",
     ({group_id, payload}, {dispatch, rejectWithValue}) => {
         try {
-            dispatch(loading())
             let parameters = {
                 url: `/api/todo/${group_id}/`,
                 payload

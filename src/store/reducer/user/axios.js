@@ -1,13 +1,13 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import httpClient from "../../../server/httpClient";
-import {getUserData, loading} from "./userSlice";
+import {authStatus, getUserData, statusReset} from "./userSlice";
 
 
 export const LoginAxios = createAsyncThunk(
     "user/loginSlice",
     (payload, {dispatch, rejectWithValue}) => {
         try {
-            dispatch(loading())
+
 
             let parameters = {
                 url: '/auth/token/login/',
@@ -16,6 +16,8 @@ export const LoginAxios = createAsyncThunk(
 
             httpClient.post(parameters).then(res => {
                 localStorage.setItem('authToken', res.data.auth_token)
+                dispatch(authStatus())
+
             })
         } catch (e) {
             console.log(rejectWithValue)
@@ -33,7 +35,32 @@ export const RegisterationAxios = createAsyncThunk(
                 payload,
             }
             httpClient.post(parameters).then(res => {
-                LoginAxios(res)
+                console.log(res)
+                dispatch(LoginAxios(payload))
+
+            })
+        } catch (e) {
+            console.log(rejectWithValue)
+        }
+    }
+);
+
+export const LogoutAxios = createAsyncThunk(
+    "user/loginSlice",
+    (payload, {dispatch, rejectWithValue}) => {
+        try {
+
+            let parameters = {
+                url: '/auth/token/logout/',
+
+            }
+            console.log(parameters)
+
+            httpClient.LogoutPost(parameters).then(() => {
+                localStorage.removeItem('authToken')
+                dispatch(statusReset())
+
+
             })
         } catch (e) {
             console.log(rejectWithValue)
@@ -51,6 +78,7 @@ export const GetUserDataAxios = createAsyncThunk(
             }
             httpClient.generalGet(parameters).then(res => {
                 dispatch(getUserData(res.data))
+
             })
         } catch (e) {
             console.log(rejectWithValue)

@@ -4,21 +4,27 @@ import {checkAuth} from "../../server/checkAuth";
 import {useDispatch} from "react-redux";
 import {GetUserDataAxios} from "../../store/reducer/user/axios";
 import Header from "../header";
+import {statusReset} from "../../store/reducer/user/userSlice";
+import {GetTodoGroupsAxios} from "../../store/reducer/todo/axios";
 
 const PrivateRoute = () => {
 
-    const history = useNavigate()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const isAuthorizated = checkAuth()
+
+
+    let isAuthorizated = checkAuth(dispatch)
+
 
     useEffect(() => {
-
         if (!isAuthorizated) {
-            return history('/welcome')
+            console.log('isAuthorizated', isAuthorizated)
+            return navigate('/welcome')
         }
 
         dispatch(GetUserDataAxios())
+        dispatch(GetTodoGroupsAxios())
     }, [isAuthorizated])
 
 

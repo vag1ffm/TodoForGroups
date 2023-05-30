@@ -5,14 +5,10 @@ import {GetTodoGroupsAxios} from "../../store/reducer/todo/axios";
 import {Link} from "react-router-dom";
 import styles from './Home.module.css'
 const Home = () => {
-    const dispatch = useDispatch()
     const {groups} = useSelector(state => state.todoSlice)
 
     console.log(groups)
 
-    useEffect(() => {
-        dispatch(GetTodoGroupsAxios())
-    }, [])
 
 
     return (
@@ -20,7 +16,7 @@ const Home = () => {
             <h1 className={'my-4'}>Home page</h1>
             <ol className="list-group list-group-numbered">
                 {groups?.map((group, index) => {
-                    return <Link className={styles.a} key={index} to={`/group/${group.id}/${group.group_title}`}>
+                    return <Link className={styles.a} key={index} to={`/group/${group.id}/`}>
                         <li className="list-group-item d-flex justify-content-between align-items-start">
                             <div className="ms-2 me-auto">
                                 <div className="fw-bold">{group.group_title}</div>
