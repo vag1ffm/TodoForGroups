@@ -2,7 +2,8 @@ import React from 'react';
 import LandingPage from '../pages/landing/Landing';
 
 
-const PublicRoute = ({}) => {
+const PublicRoute = () => {
+
     return (
         <>
             <LandingPage/>

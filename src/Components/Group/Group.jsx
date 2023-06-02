@@ -5,17 +5,23 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {AddTodosAxios, ChangeTodosAxios, DeleteTodosAxios, GetTodosAxios} from "../../store/reducer/todo/axios";
+import {
+    AddTodosAxios,
+    ChangeTodosAxios,
+    DeleteTodosAxios,
+    GetTodoMembersAxios,
+    GetTodosAxios
+} from "../../store/reducer/todo/axios";
 import './Group.css'
 const Group = () => {
     const {group_id, group_name} = useParams();
-    const {todos, error} = useSelector(state => state.todoSlice);
+    const {todos, error, members} = useSelector(state => state.todoSlice);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    console.log(group_id)
+
 
     const schema = yup.object().shape({
-        title: yup.string()
+        todo_title: yup.string()
     })
 
     const {handleSubmit, register, formState: {errors}, reset} = useForm({
@@ -23,26 +29,30 @@ const Group = () => {
     })
 
     const onSubmit = (data) => {
-        console.log(data)
-        const payload = data
-        dispatch(AddTodosAxios({group_id, payload}))
+        const payload = {
+            ...data,
+            todo_group_id: group_id,
+        }
+        dispatch(AddTodosAxios(payload))
         reset()
     }
-
 
     useEffect(() => {
         error && navigate('/error')
     }, [error])
+
     useEffect(() => {
         dispatch(GetTodosAxios(group_id))
+        dispatch(GetTodoMembersAxios(group_id))
+
     }, [])
+
 
     const handleTodoCompletion = (todo) => {
         let payload = {
             ...todo,
-            completed: !todo.completed
+            todo_is_complete: !todo.todo_is_complete
         }
-
         dispatch(ChangeTodosAxios({payload, group_id}))
     }
 
@@ -51,9 +61,9 @@ const Group = () => {
 
     // Функция сортировки туду
     const sortTodos = (a, b) => {
-        if (a.completed && !b.completed) {
+        if (a.todo_is_complete && !b.todo_is_complete) {
             return 1;
-        } else if (!a.completed && b.completed) {
+        } else if (!a.todo_is_complete && b.todo_is_complete) {
             return -1;
         } else {
             return a.index - b.index;
@@ -66,6 +76,7 @@ const Group = () => {
 
     // Применяем сортировку к копии массива todos
     const sortedTodos = todosCopy.sort(sortTodos);
+
 
 
     return (
@@ -83,8 +94,8 @@ const Group = () => {
                         {/* Форма добавления туду */}
                         <div className="form-group">
                             <label>Todo name</label>
-                            <input type="text" className="form-control" {...register('title')} />
-                            {errors.title && <p>{errors.title.message}</p>}
+                            <input type="text" className="form-control" {...register('todo_title')} />
+                            {errors.todo_title && <p>{errors.todo_title.message}</p>}
                         </div>
                         <button type="submit" className="btn btn-primary mt-2">
                             Add
@@ -93,18 +104,18 @@ const Group = () => {
 
                     <ol className="list-group list-group-numbered mt-3">
                         {sortedTodos?.map((todo, index) => {
-                            const todoStyle = todo.completed ? { background: '#27ff0069' } : {};
+                            const todoStyle = todo.todo_is_complete ? { background: '#27ff0069' } : {};
 
                             return (
                                 <li key={index} style={todoStyle} className="list-group-item d-flex justify-content-between align-items-start">
                                     <div className="ms-2 me-auto">
-                                        <div className="fw-bold">{todo.title}</div>
-                                        {todo.person_name}
+                                        <div className="fw-bold">{todo.todo_title}</div>
+                                        {todo.todo_owner_name}
                                     </div>
                                     <div className={'d-flex mt-2 align-items-center'}>
                                         <Form.Check
                                             type="checkbox"
-                                            checked={todo.completed}
+                                            checked={todo.todo_is_complete}
                                             onChange={() => handleTodoCompletion(todo)}
                                         />
                                         <button className="btn btn-danger btn-sm ms-2" onClick={() => handleTodoDeletion(todo.id)}>
@@ -120,9 +131,9 @@ const Group = () => {
                 <Col lg={3} className="mt-lg-0 mt-3">
                     <h4>Participants</h4>
                     <ul className="list-group">
-                        {todos?.map((todo, index) => (
+                        {members?.map((member, index) => (
                             <li key={index} className="list-group-item">
-                                {todo.person_name}
+                                {member}
                             </li>
                         ))}
                     </ul>

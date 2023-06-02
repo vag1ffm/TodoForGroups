@@ -3,6 +3,7 @@ import { createSlice} from "@reduxjs/toolkit";
 const initialState = {
     groups: [],
     todos: [],
+    members: [],
     isLoading: false,
     error: '',
     status: 0,
@@ -15,13 +16,19 @@ export const todoSlice = createSlice({
         getTodoGroups(state, {payload}){
             state.isLoading = false
             state.error = false
-            state.groups = [...payload.mine, ...payload.others]
+            state.groups = payload
         },
         getTodos(state, {payload}) {
             state.isLoading = false
             state.error = false
             state.todos = payload
         },
+        getGroupMembers(state, {payload}) {
+            state.isLoading = false
+            state.error = false
+            state.members = payload
+        },
+
 
         loading(state) {
             state.isLoading = true
@@ -34,17 +41,6 @@ export const todoSlice = createSlice({
         },
     },
 
-    // extraReducers: (reducerChanger) => {
-    //     reducerChanger.addCase(LoginAxios.pending, (state) => {
-    //         state.status = 0;
-    //     });
-    //     reducerChanger.addCase(LoginAxios.fulfilled, (state) => {
-    //             state.status = 1;
-    //     });
-    //     reducerChanger.addCase(LoginAxios.rejected, (state) => {
-    //         state.status = 0;
-    //     });
-    // }
 })
 
 
@@ -52,6 +48,7 @@ export const {
     getTodoGroups,
     getTodos,
     loading,
-    error
+    error,
+    getGroupMembers
 } = todoSlice.actions
 export default todoSlice.reducer;

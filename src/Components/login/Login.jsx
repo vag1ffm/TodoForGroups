@@ -5,7 +5,8 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {Modal} from 'react-bootstrap';
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {LoginAxios} from "../../store/reducer/user/axios";
+
+import {LoginAxios} from "../../store/reducer/Authorization/axios";
 
 const Login = () => {
 
@@ -18,7 +19,7 @@ const Login = () => {
         resolver: yupResolver(schema),
     });
 
-    const {isLoading, status} = useSelector(state => state.userSlice)
+    const {isLoading, status} = useSelector(state => state.authSlice)
 
 
 
@@ -29,9 +30,8 @@ const Login = () => {
         status === 1 && navigate('/')
     }, [status])
 
-    console.log('status', status)
+
     const onSubmit = (data) => {
-        console.log(data);
         dispatch(LoginAxios(data))
         // Здесь можно выполнить логику отправки данных на сервер или другие действия
     };

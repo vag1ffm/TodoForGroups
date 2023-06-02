@@ -7,7 +7,6 @@ import styles from './Home.module.css'
 const Home = () => {
     const {groups} = useSelector(state => state.todoSlice)
 
-    console.log(groups)
 
 
 
@@ -22,7 +21,7 @@ const Home = () => {
                                 <div className="fw-bold">{group.group_title}</div>
                                 {group.group_owner_name}
                             </div>
-                            <span className="badge bg-primary rounded-pill">{group?.todo_count}9</span>
+                            <span className="badge bg-primary rounded-pill">{group?.todos_count}</span>
                         </li>
                     </Link>
                 })}

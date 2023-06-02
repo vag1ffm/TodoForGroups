@@ -18,7 +18,6 @@ const FindGroup = () => {
     const dispathc = useDispatch()
 
     const onSubmit = (data) => {
-        console.log(data)
         dispathc(JoinToGroupAxios(data))
     }
 
@@ -28,12 +27,12 @@ const FindGroup = () => {
 
             <form onSubmit={handleSubmit(onSubmit)} className={'col-9'}>
                 <div className="form-group">
-                    <label>Username</label>
+                    <label>Group name</label>
                     <input type="text" className="form-control" {...register('group_title')} />
                     {errors.group_title && <p>{errors.group_title.message}</p>}
                 </div>
                 <div className="form-group mt-2">
-                    <label>Password</label>
+                    <label>Group password</label>
                     <input type="password" className="form-control" {...register('group_password')} />
                     {errors.group_password && <p>{errors.group_password.message}</p>}
                 </div>

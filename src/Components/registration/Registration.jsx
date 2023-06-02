@@ -4,8 +4,8 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Button, Modal} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {RegisterationAxios} from "../../store/reducer/user/axios";
 import {useNavigate} from "react-router-dom";
+import {RegisterationAxios} from "../../store/reducer/Authorization/axios";
 
 const Registration = () => {
 
@@ -21,7 +21,6 @@ const Registration = () => {
 
     const dispatch = useDispatch()
     const onSubmit = (data) => {
-        console.log(data);
         dispatch(RegisterationAxios(data))
     };
 

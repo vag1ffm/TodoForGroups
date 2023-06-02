@@ -23,7 +23,6 @@ class HttpClient {
 
     generalPost(parameters) {
         const {url, payload} = parameters;
-        console.log(parameters)
         const options = {
             headers: {
                 'Content-Type': 'application/json',

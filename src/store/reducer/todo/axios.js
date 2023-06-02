@@ -1,20 +1,19 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import httpClient from "../../../server/httpClient";
-import {error, getTodoGroups, getTodos, loading} from "./todoSlice";
+import {error, getGroupMembers, getTodoGroups, getTodos, loading} from "./todoSlice";
 
 
 export const CreateTodoGroupAxios = createAsyncThunk(
-    "user/loginSlice",
+    "user/amirSoska",
     (payload, {dispatch, rejectWithValue}) => {
         try {
 
             let parameters = {
-                url: '/api/group/',
+                url: '/api/groups/',
                 payload,
             }
 
             httpClient.generalPost(parameters).then(res => {
-                console.log(res)
             })
         } catch (e) {
             console.log(rejectWithValue)
@@ -27,14 +26,11 @@ export const GetTodoGroupsAxios = createAsyncThunk(
     (payload, {dispatch, rejectWithValue}) => {
         try {
             let parameters = {
-                url: '/api/group/',
+                url: '/api/groups/',
                 payload,
             }
             httpClient.generalGet(parameters).then(res => {
-                dispatch(getTodoGroups({
-                    others: res.data.groups[0],
-                    mine: res.data.groups[1],
-                }))
+                dispatch(getTodoGroups(res.data))
             })
         } catch (e) {
             console.log(rejectWithValue)
@@ -47,12 +43,12 @@ export const GetTodosAxios = createAsyncThunk(
     (payload, {dispatch, rejectWithValue}) => {
         try {
             let parameters = {
-                url: `/api/todo/${payload}`,
+                url: `/api/todos/?group_id=${payload}`,
             }
+
             httpClient.generalGet(parameters).then(res => {
-                if (res.data.todos !== undefined) {
-                    console.log(res.data.todos)
-                    dispatch(getTodos(res.data.todos))
+                if (res.data !== undefined) {
+                    dispatch(getTodos(res.data))
                 } else {
                     dispatch(error())
                 }
@@ -65,17 +61,16 @@ export const GetTodosAxios = createAsyncThunk(
 
 export const AddTodosAxios = createAsyncThunk(
     "user/loginSlice",
-    ({group_id, payload}, {dispatch, rejectWithValue}) => {
+    (payload, {dispatch, rejectWithValue}) => {
         try {
             let parameters = {
-                url: `/api/todo/${group_id}/`,
+                url: `/api/todos/`,
                 payload
             }
-            console.log(payload)
 
             httpClient.generalPost(parameters).then(res => {
-                console.log(res)
-                dispatch(GetTodosAxios(group_id))
+
+                dispatch(GetTodosAxios(payload.todo_group_id))
                 // dispatch(getTodos(res.data.todos))
             })
         } catch (e) {
@@ -90,15 +85,12 @@ export const ChangeTodosAxios = createAsyncThunk(
         try {
 
             let parameters = {
-                url: `/api/todo/${payload.id}/`,
+                url: `/api/todos/${payload.id}/`,
                 payload
             }
-            console.log(parameters)
 
             httpClient.generalPut(parameters).then(res => {
-                console.log(res)
                 dispatch(GetTodosAxios(group_id))
-                // dispatch(getTodos(res.data.todos))
             })
         } catch (e) {
             console.log(rejectWithValue)
@@ -112,14 +104,29 @@ export const DeleteTodosAxios = createAsyncThunk(
         try {
 
             let parameters = {
-                url: `/api/todo/${payload}/`,
+                url: `/api/todos/${payload}/`,
             }
-            console.log(payload)
 
             httpClient.generalDelete(parameters).then(res => {
-                console.log(res)
                 dispatch(GetTodosAxios(group_id))
                 // dispatch(getTodos(res.data.todos))
+            })
+        } catch (e) {
+            console.log(rejectWithValue)
+        }
+    }
+);
+export const GetTodoMembersAxios = createAsyncThunk(
+    "user/loginSlice",
+    (group_id, {dispatch, rejectWithValue}) => {
+        try {
+
+            let parameters = {
+                url: `/api/groups-member/?group_id=${group_id}`,
+            }
+
+            httpClient.generalGet(parameters).then(res => {
+                dispatch(getGroupMembers(res.data.group_members))
             })
         } catch (e) {
             console.log(rejectWithValue)

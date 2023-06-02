@@ -1,75 +1,10 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import httpClient from "../../../server/httpClient";
-import {authStatus, getUserData, statusReset} from "./userSlice";
+import {getUserData} from "./userSlice";
 
-
-export const LoginAxios = createAsyncThunk(
-    "user/loginSlice",
-    (payload, {dispatch, rejectWithValue}) => {
-        try {
-
-
-            let parameters = {
-                url: '/auth/token/login/',
-                payload,
-            }
-
-            httpClient.post(parameters).then(res => {
-                localStorage.setItem('authToken', res.data.auth_token)
-                dispatch(authStatus())
-
-            })
-        } catch (e) {
-            console.log(rejectWithValue)
-        }
-    }
-);
-
-export const RegisterationAxios = createAsyncThunk(
-    "user/loginSlice",
-    (payload, {dispatch, rejectWithValue}) => {
-        try {
-
-            let parameters = {
-                url: '/api/auth/users/',
-                payload,
-            }
-            httpClient.post(parameters).then(res => {
-                console.log(res)
-                dispatch(LoginAxios(payload))
-
-            })
-        } catch (e) {
-            console.log(rejectWithValue)
-        }
-    }
-);
-
-export const LogoutAxios = createAsyncThunk(
-    "user/loginSlice",
-    (payload, {dispatch, rejectWithValue}) => {
-        try {
-
-            let parameters = {
-                url: '/auth/token/logout/',
-
-            }
-            console.log(parameters)
-
-            httpClient.LogoutPost(parameters).then(() => {
-                localStorage.removeItem('authToken')
-                dispatch(statusReset())
-
-
-            })
-        } catch (e) {
-            console.log(rejectWithValue)
-        }
-    }
-);
 
 export const GetUserDataAxios = createAsyncThunk(
-    "user/loginSlice",
+    "user/GetUserData",
     (payload, {dispatch, rejectWithValue}) => {
         try {
             let parameters = {
@@ -87,11 +22,11 @@ export const GetUserDataAxios = createAsyncThunk(
 );
 
 export const JoinToGroupAxios = createAsyncThunk(
-    "user/loginSlice",
+    "user/JoinToGroup",
     (payload, {dispatch, rejectWithValue}) => {
         try {
             let parameters = {
-                url: '/api/group_member/',
+                url: '/api/groups-member/',
                 payload,
             }
             httpClient.generalPost(parameters).then(res => {
@@ -102,3 +37,4 @@ export const JoinToGroupAxios = createAsyncThunk(
         }
     }
 );
+

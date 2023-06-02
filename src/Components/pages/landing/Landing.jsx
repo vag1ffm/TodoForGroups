@@ -16,7 +16,7 @@ const LandingPage = () => {
         setShowModal(false);
     };
 
-    let {status} = useSelector(state => state.userSlice)
+
 
 
 
